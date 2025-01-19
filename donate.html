@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Підтримати проект - SparkME</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="burger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <h1>✨ SparkME</h1>
+            <div class="nav-links">
+                <a href="index.html">Стрічка</a>
+                <a href="messages.html">Повідомлення</a>
+                <a href="donate.html" class="donate-link">
+                    <i class="fas fa-heart"></i> Підтримати
+                </a>
+            </div>
+            <div class="nav-buttons" id="authButtons">
+                <!-- Кнопки будуть додаватися динамічно -->
+            </div>
+        </nav>
+    </header>
+
+    <main class="donate-page">
+        <div class="donate-container">
+            <h2>Підтримати проект</h2>
+            <p class="donate-description">
+                Допоможіть нам зробити SparkME ще кращим! Ваша підтримка допоможе нам розвивати проект
+                та додавати нові функції.
+            </p>
+
+            <div class="donation-options">
+                <div class="donation-card">
+                    <i class="fas fa-coffee"></i>
+                    <h3>Купити каву</h3>
+                    <p class="price">$5</p>
+                    <p class="description">Підтримайте нас на одну чашку кави</p>
+                    <button class="donate-btn" onclick="donate(5)">Підтримати</button>
+                </div>
+
+                <div class="donation-card">
+                    <i class="fas fa-pizza-slice"></i>
+                    <h3>Купити піцу</h3>
+                    <p class="price">$10</p>
+                    <p class="description">Допоможіть нам залишатися ситими та продуктивними</p>
+                    <button class="donate-btn" onclick="donate(10)">Підтримати</button>
+                </div>
+
+                <div class="donation-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Стати спонсором</h3>
+                    <p class="price">$50</p>
+                    <p class="description">Станьте офіційним спонсором проекту</p>
+                    <button class="donate-btn" onclick="donate(50)">Підтримати</button>
+                </div>
+            </div>
+
+            <div class="custom-donation">
+                <h3>Інша сума</h3>
+                <div class="custom-donation-input">
+                    <span class="currency">$</span>
+                    <input type="number" id="customAmount" min="1" placeholder="Введіть суму">
+                    <button class="donate-btn" onclick="donateCustom()">Підтримати</button>
+                </div>
+            </div>
+
+            <div class="payment-methods">
+                <h3>Способи оплати</h3>
+                <div class="payment-icons">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-apple-pay"></i>
+                    <i class="fab fa-google-pay"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SparkME. Всі права захищені.</p>
+    </footer>
+
+    <script src="burger-menu.js"></script>
+    <script src="config.js" type="module"></script>
+    <script src="donate.js" type="module"></script>
+    <script src="auth-check.js" type="module"></script>
+    <script>
+        const authButtons = document.getElementById('authButtons');
+        const currentUser = localStorage.getItem('currentUser');
+        
+        if (currentUser) {
+            const user = JSON.parse(currentUser);
+            authButtons.innerHTML = `
+                <a href="profile.html" class="user-name">${user.name || user.email}</a>
+                <button onclick="logout()" class="btn">Вийти</button>
+            `;
+        } else {
+            authButtons.innerHTML = `
+                <a href="login.html" class="btn">Увійти</a>
+                <a href="register.html" class="btn">Реєстрація</a>
+            `;
+        }
+    </script>
+</body>
+</html> 
