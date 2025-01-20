@@ -160,191 +160,254 @@ nav h1 {
 /* Profiles grid */
 .profiles {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .profile-card {
-    background-color: var(--secondary-color);
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: all var(--animation-speed);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+    display: flex;
+    height: 200px;
 }
 
 .profile-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.profile-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    border: 3px solid var(--gray-light);
+.profile-preview {
+    width: 40%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-.profile-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-.profile-card p {
-    color: var(--gray);
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-}
-
-.profile-card button {
+.profile-avatar {
     width: 100%;
-    padding: 0.8rem;
-    border: none;
+    height: 60%;
+    padding: 10px;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.profile-gallery-preview {
+    width: 100%;
+    height: 40%;
+    padding: 0 10px 10px;
+}
+
+.gallery-preview-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.profile-info {
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-header h3 {
+    margin: 0 0 5px;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.location {
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.interests-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.interest-tag {
+    background: #f0f0f0;
+    padding: 3px 8px;
     border-radius: 12px;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--animation-speed);
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.interest-more {
+    color: #666;
+    font-size: 0.8rem;
+    padding: 3px 8px;
 }
 
 /* Modal styles */
-.modal {
+.profile-modal {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
 }
 
 .modal-content {
-    background-color: var(--secondary-color);
-    padding: 1.5rem;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 400px;
-    margin: 2rem auto;
     position: relative;
+    background: white;
+    margin: 50px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 12px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-.modal-content h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.close {
+.close-modal {
     position: absolute;
-    right: 1.2rem;
-    top: 1.2rem;
-    font-size: 1.5rem;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    color: #666;
+    z-index: 1;
+}
+
+.modal-profile {
+    display: flex;
+    gap: 30px;
+}
+
+.modal-gallery {
+    width: 50%;
+}
+
+.modal-main-photo {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.gallery-item {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.modal-info {
+    width: 50%;
+}
+
+.modal-info h2 {
+    margin: 0 0 10px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.modal-location {
+    color: #666;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: var(--gray-light);
+    gap: 5px;
 }
 
-/* Form styles */
-form {
+.modal-bio {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.modal-interests h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.interests-grid {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-form input,
-form select {
-    padding: 0.8rem 1.2rem;
-    border: 2px solid var(--gray-light);
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: all var(--animation-speed);
-}
-
-form input:focus,
-form select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-form button {
-    padding: 0.8rem;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--animation-speed);
-}
-
-form button:hover {
-    opacity: 0.9;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 1.5rem;
-    background-color: var(--secondary-color);
-    color: var(--gray);
-    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 /* Media Queries */
-@media (min-width: 768px) {
-    nav {
-        padding: 0 2rem;
+@media (max-width: 768px) {
+    .profiles {
+        grid-template-columns: 1fr;
+        padding: 10px;
     }
 
-    .burger-menu {
-        display: none;
+    .profile-card {
+        height: auto;
+        flex-direction: column;
     }
 
-    .nav-links {
-        position: static;
-        display: flex;
+    .profile-preview {
+        width: 100%;
         flex-direction: row;
-        padding: 0;
-        box-shadow: none;
-        background: none;
-        gap: 1rem;
+        height: 120px;
     }
 
-    .nav-links a {
-        background: none;
-        padding: 0.5rem 1rem;
+    .profile-avatar {
+        width: 120px;
+        height: 100%;
     }
 
-    .profiles {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 2rem;
-        gap: 1.5rem;
+    .profile-gallery-preview {
+        flex: 1;
+        height: 100%;
+        padding: 10px;
     }
 
-    .modal-content {
-        padding: 2rem;
+    .profile-info {
+        width: 100%;
     }
-}
 
-@media (min-width: 1024px) {
-    .profiles {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 1200px;
-        margin: 0 auto;
+    .modal-profile {
+        flex-direction: column;
+    }
+
+    .modal-gallery, .modal-info {
+        width: 100%;
+    }
+
+    .modal-main-photo {
+        height: 250px;
     }
 }
 
@@ -644,17 +707,19 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .profile-photo-section {
-    text-align: center;
-    margin-bottom: 2rem;
+    position: relative;
+    width: 150px;
+    margin: 0 auto 20px;
 }
 
 .profile-photo {
-    position: relative;
     width: 150px;
     height: 150px;
-    margin: 0 auto;
     border-radius: 50%;
     overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .profile-photo img {
@@ -668,21 +733,60 @@ input[type="file"]::-webkit-file-upload-button {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0.5rem;
-    opacity: 0;
-    transition: opacity var(--animation-speed);
-}
-
-.profile-photo:hover .photo-overlay {
-    opacity: 1;
+    background: rgba(0,0,0,0.6);
+    padding: 8px 0;
+    text-align: center;
+    transition: opacity 0.3s;
 }
 
 .photo-upload-btn {
     color: white;
     cursor: pointer;
-    display: block;
-    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.photo-upload-btn i {
+    font-size: 20px;
+}
+
+.upload-progress {
+    width: 100%;
+    height: 4px;
+    background: #f0f0f0;
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #007bff;
+    transition: width 0.3s ease;
+}
+
+/* Мобільні стилі */
+@media (max-width: 768px) {
+    .profile-photo-section {
+        width: 120px;
+    }
+    
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .photo-upload-btn {
+        font-size: 12px;
+    }
+    
+    .photo-upload-btn i {
+        font-size: 16px;
+    }
 }
 
 .settings-form {
@@ -977,8 +1081,7 @@ input[type="file"]::-webkit-file-upload-button {
     }
 }
 
-/* Додайте ці стилі до існуючого файлу */
-
+/* Likes page styles */
 .likes-page {
     margin-top: 70px;
     padding: 2rem 1rem;
@@ -1411,4 +1514,105 @@ input[type="file"]::-webkit-file-upload-button {
 .btn-outline:hover {
     background-color: var(--primary-color);
     color: var(--secondary-color);
-} 
+}
+
+/* Loader */
+#profilesLoader {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* End Message */
+.end-message {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9) 20%);
+    position: relative;
+    margin-top: 20px;
+}
+
+.end-message-content {
+    text-align: center;
+    max-width: 400px;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.end-message-content i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.end-message-content h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.end-message-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.share-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-color-dark);
+}
+
+.share-button i {
+    font-size: 1.1rem;
+}
+
+/* Адаптивність для мобільних */
+@media (max-width: 768px) {
+    .end-message-content {
+        padding: 20px;
+        margin: 0 10px;
+    }
+
+    .end-message-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .share-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}

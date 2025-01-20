@@ -60,20 +60,81 @@ async function updateProfile(profileData) {
     }
 }
 
-// Обробка завантаження фото
+// Функція для стиснення зображення
+async function compressImage(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Максимальний розмір для фото профілю
+                const MAX_SIZE = 800;
+
+                if (width > height && width > MAX_SIZE) {
+                    height = Math.round((height * MAX_SIZE) / width);
+                    width = MAX_SIZE;
+                } else if (height > MAX_SIZE) {
+                    width = Math.round((width * MAX_SIZE) / height);
+                    height = MAX_SIZE;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], file.name, {
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    }));
+                }, 'image/jpeg', 0.8); // Якість 0.8 для оптимального балансу
+            };
+        };
+    });
+}
+
+// Оновлена функція завантаження фото
 async function uploadProfilePhoto(file) {
+    const progressBar = document.querySelector('.progress-bar');
+    const progressContainer = document.getElementById('uploadProgress');
+    
     try {
+        progressContainer.style.display = 'block';
+        progressBar.style.width = '0%';
+
         const { data: { session } } = await supabase.auth.getSession();
         if (!session?.user) throw new Error('Користувач не авторизований');
+
+        // Стискаємо зображення перед завантаженням
+        const compressedFile = await compressImage(file);
 
         const fileExt = file.name.split('.').pop();
         const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
         const filePath = `avatars/${fileName}`;
 
+        // Симулюємо прогрес завантаження
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += 5;
+            if (progress <= 90) {
+                progressBar.style.width = `${progress}%`;
+            }
+        }, 100);
+
         const { error: uploadError } = await supabase.storage
             .from('profiles')
-            .upload(filePath, file);
+            .upload(filePath, compressedFile);
 
+        clearInterval(progressInterval);
+        
         if (uploadError) throw uploadError;
 
         // Оновлюємо URL фото в профілі
@@ -86,14 +147,25 @@ async function uploadProfilePhoto(file) {
 
         if (updateError) throw updateError;
 
+        // Показуємо 100% прогрес
+        progressBar.style.width = '100%';
+        
         // Оновлюємо превью фото
         const preview = document.getElementById('currentPhoto');
         if (preview) {
-            preview.src = URL.createObjectURL(file);
+            preview.src = URL.createObjectURL(compressedFile);
         }
+
+        // Ховаємо прогрес бар після успішного завантаження
+        setTimeout(() => {
+            progressContainer.style.display = 'none';
+            progressBar.style.width = '0%';
+        }, 1000);
+
     } catch (error) {
         console.error('Помилка завантаження фото:', error);
         alert('Помилка завантаження фото: ' + error.message);
+        progressContainer.style.display = 'none';
     }
 }
 
@@ -210,40 +282,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         photoInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
-                try {
-                    const { data: { session } } = await supabase.auth.getSession();
-                    if (!session?.user) throw new Error('Користувач не авторизований');
-
-                    const fileExt = file.name.split('.').pop();
-                    const fileName = `${session.user.id}-${Date.now()}.${fileExt}`;
-                    const filePath = `avatars/${fileName}`;
-
-                    const { error: uploadError } = await supabase.storage
-                        .from('profiles')
-                        .upload(filePath, file);
-
-                    if (uploadError) throw uploadError;
-
-                    const { error: updateError } = await supabase
-                        .from('profiles')
-                        .update({ avatar_url: filePath })
-                        .eq('id', session.user.id);
-
-                    if (updateError) throw updateError;
-
-                    const avatar = document.getElementById('currentPhoto');
-                    if (avatar) {
-                        const { data: { publicUrl } } = supabase.storage
-                            .from('profiles')
-                            .getPublicUrl(filePath);
-                        avatar.src = publicUrl;
-                    }
-
-                    alert('Фото профілю оновлено!');
-                } catch (error) {
-                    console.error('Помилка завантаження фото:', error);
-                    alert('Помилка завантаження фото: ' + error.message);
-                }
+                await uploadProfilePhoto(file);
             }
         });
     }
