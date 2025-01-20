@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій профіль - SparkME</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="burger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <h1>✨ SparkME</h1>
+            <div class="nav-links">
+                <a href="index.html">Стрічка</a>
+                <a href="messages.html">Повідомлення</a>
+                <a href="donate.html" class="donate-link">
+                    <i class="fas fa-heart"></i> Підтримати
+                </a>
+            </div>
+            <div class="nav-buttons" id="authButtons">
+                <!-- Кнопки будуть додаватися динамічно -->
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-photo-large">
+                    <img src="./images/default-avatar.png" alt="Фото профілю" id="profilePhoto">
+                </div>
+                <div class="profile-info">
+                    <h2 id="profileName">Ім'я користувача</h2>
+                    <p class="profile-meta">
+                        <span id="profileAge">Вік</span> • 
+                        <span id="profileCity">Місто</span>
+                    </p>
+                    <div class="profile-actions">
+                        <a href="profile-settings.html" class="btn-outline">
+                            <i class="fas fa-cog"></i> Редагувати профіль
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-sections">
+                <section class="profile-section">
+                    <h3>Про мене</h3>
+                    <p id="profileBio">Інформація про користувача</p>
+                </section>
+
+                <section class="profile-section">
+                    <h3>Інтереси</h3>
+                    <div class="interests-display" id="profileInterests">
+                        <!-- Інтереси будуть додані через JavaScript -->
+                    </div>
+                </section>
+
+                <section class="profile-section">
+                    <h3>Контакти</h3>
+                    <div class="social-links" id="profileContacts">
+                        <!-- Контакти будуть додані через JavaScript -->
+                    </div>
+                </section>
+
+                <section class="profile-section">
+                    <h3>Галерея</h3>
+                    <div class="profile-gallery" id="profileGallery">
+                        <!-- Фотографії будуть додані через JavaScript -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SparkME. Всі права захищені.</p>
+    </footer>
+
+    <script>
+        // Ініціалізація Supabase
+        const supabaseUrl = 'https://hqqqneqjqvjaemjusxub.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhxcXFuZXFqcXZqYWVtanVzeHViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczMTMzNjQsImV4cCI6MjA1Mjg4OTM2NH0.1uV4_zyh1AouKmEMSqgvUDpQG4RoF_ppSZDel79wsIk';
+        
+        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey, {
+            auth: {
+                autoRefreshToken: true,
+                persistSession: true,
+                detectSessionInUrl: false
+            }
+        });
+    </script>
+
+    <script src="burger-menu.js" defer></script>
+    <script src="config.js" type="module"></script>
+    <script src="auth.js" type="module"></script>
+    <script src="auth-check.js" type="module"></script>
+    <script src="profile.js" type="module"></script>
+    <script>
+        const authButtons = document.getElementById('authButtons');
+        const currentUser = localStorage.getItem('currentUser');
+        
+        if (currentUser) {
+            const user = JSON.parse(currentUser);
+            authButtons.innerHTML = `
+                <a href="profile.html" class="user-name">${user.name || user.email}</a>
+                <button onclick="logout()" class="btn">Вийти</button>
+            `;
+        } else {
+            authButtons.innerHTML = `
+                <a href="login.html" class="btn">Увійти</a>
+                <a href="register.html" class="btn">Реєстрація</a>
+            `;
+        }
+    </script>
+</body>
+</html>
