@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Відображаємо профілі
             profilesContainer.innerHTML = profiles.map(profile => `
                 <div class="profile-card">
-                    <img src="${profile.avatar_url || 'default-avatar.png'}" alt="${profile.name}">
+                    <img src="${profile.avatar_url ? 
+                        supabase.storage.from('avatars').getPublicUrl(profile.avatar_url).data.publicUrl 
+                        : '/images/default-avatar.png'}" alt="${profile.name}">
                     <h3>${profile.name || 'Без імені'}, ${profile.age || '?'}</h3>
                     <p>${profile.bio || ''}</p>
                     <button onclick="showProfile('${profile.id}')">Переглянути профіль</button>

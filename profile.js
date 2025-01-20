@@ -26,19 +26,19 @@ async function loadProfile() {
         const cityElement = document.getElementById('profileCity');
         const bioElement = document.getElementById('profileBio');
         const interestsElement = document.getElementById('profileInterests');
-        const profilePhoto = document.getElementById('profilePhoto');
+        const avatar = document.getElementById('profilePhoto');
         const socialLinks = document.getElementById('profileContacts');
         const galleryElement = document.getElementById('profileGallery');
 
-        // Встановлюємо фото за замовчуванням
-        if (profilePhoto) {
+        // Встановлюємо аватарку за замовчуванням
+        if (avatar) {
             if (profile?.avatar_url) {
                 const { data: { publicUrl } } = supabase.storage
-                    .from('profiles')
+                    .from('avatars')
                     .getPublicUrl(profile.avatar_url);
-                profilePhoto.src = publicUrl;
+                avatar.src = publicUrl;
             } else {
-                profilePhoto.src = './images/default-avatar.png';
+                avatar.src = '/images/default-avatar.png';
             }
         }
 

@@ -103,7 +103,6 @@ async function register(email, password) {
 
             if (signInData?.session) {
                 console.log('Успішний вхід після реєстрації:', signInData.session);
-                localStorage.setItem('currentUser', JSON.stringify(signInData.user));
                 window.location.href = 'profile-settings.html';
                 return;
             }
@@ -129,15 +128,14 @@ async function login(email, password) {
 
         if (error) throw error;
 
-        if (data?.user) {
-            console.log('Успішний вхід:', data.user);
-            localStorage.setItem('currentUser', JSON.stringify(data.user));
+        if (data?.session) {
+            console.log('Успішний вхід:', data.session);
 
             // Перевіряємо чи заповнений профіль
             const { data: profile, error: profileError } = await supabase
                 .from('profiles')
                 .select('name, age')
-                .eq('id', data.user.id)
+                .eq('id', data.session.user.id)
                 .single();
 
             if (profileError) {
@@ -187,13 +185,13 @@ window.logout = logout;
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const { data: { session }, error } = await supabase.auth.getSession();
-        
         if (error) throw error;
         
-        if (session?.user) {
-            localStorage.setItem('currentUser', JSON.stringify(session.user));
-        } else {
-            localStorage.removeItem('currentUser');
+        // Якщо користувач не авторизований і це не сторінка логіну/реєстрації
+        if (!session?.user && 
+            !window.location.pathname.includes('login.html') && 
+            !window.location.pathname.includes('register.html')) {
+            window.location.href = 'login.html';
         }
     } catch (error) {
         console.error('Помилка перевірки автентифікації:', error);

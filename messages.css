@@ -174,3 +174,380 @@
     text-decoration: none;
     font-weight: 500;
 }
+
+.messages-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.messages-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.messages-container h2 {
+    padding: 20px;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.requests-grid {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.request-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.request-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.request-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.request-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.request-info h3 {
+    margin: 0 0 5px;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.request-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.request-time {
+    font-size: 0.8em !important;
+    color: #999 !important;
+    margin-top: 5px !important;
+}
+
+.request-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.accept-request,
+.decline-request {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.accept-request {
+    background: #4CAF50;
+    color: white;
+}
+
+.accept-request:hover {
+    background: #45a049;
+}
+
+.decline-request {
+    background: #f44336;
+    color: white;
+}
+
+.decline-request:hover {
+    background: #da190b;
+}
+
+.no-requests-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.no-requests-message i {
+    font-size: 3em;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.no-requests-message p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.match-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.match-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.match-content h2 {
+    color: #333;
+    margin: 0 0 15px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.contact-link:hover {
+    opacity: 0.9;
+}
+
+.contact-link.telegram {
+    background: #0088cc;
+}
+
+.contact-link.instagram {
+    background: #e1306c;
+}
+
+.contact-link.facebook {
+    background: #3b5998;
+}
+
+.close-match {
+    background: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.close-match:hover {
+    background: #555;
+}
+
+.match-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.view-profile {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s ease;
+}
+
+.view-profile:hover {
+    background: #1976D2;
+}
+
+.profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.profile-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.profile-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info h2 {
+    margin: 0 0 5px;
+    color: #333;
+}
+
+.profile-info p {
+    margin: 0;
+    color: #666;
+}
+
+.profile-about {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.profile-about h3 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.profile-about p {
+    margin: 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.profile-contacts {
+    margin: 20px 0;
+}
+
+.profile-contacts h3 {
+    margin: 0 0 15px;
+    color: #333;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.no-contacts {
+    text-align: center;
+    color: #666;
+    margin: 10px 0;
+}
+
+.close-profile {
+    width: 100%;
+    background: #666;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+    transition: background 0.2s ease;
+}
+
+.close-profile:hover {
+    background: #555;
+}
+
+@media (max-width: 768px) {
+    .messages-page {
+        padding: 10px;
+    }
+
+    .request-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .request-profile {
+        flex-direction: column;
+    }
+
+    .request-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-content {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .match-actions {
+        flex-direction: column;
+    }
+
+    .view-profile,
+    .close-match {
+        width: 100%;
+    }
+}

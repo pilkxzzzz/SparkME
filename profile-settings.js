@@ -116,9 +116,7 @@ async function uploadProfilePhoto(file) {
         // Стискаємо зображення перед завантаженням
         const compressedFile = await compressImage(file);
 
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
-        const filePath = `avatars/${fileName}`;
+        const fileName = `${session.user.id}-${Math.random()}.jpg`;
 
         // Симулюємо прогрес завантаження
         let progress = 0;
@@ -129,31 +127,55 @@ async function uploadProfilePhoto(file) {
             }
         }, 100);
 
-        const { error: uploadError } = await supabase.storage
-            .from('profiles')
-            .upload(filePath, compressedFile);
+        try {
+            // Завантажуємо файл
+            const { error: uploadError } = await supabase.storage
+                .from('avatars')
+                .upload(fileName, compressedFile, {
+                    cacheControl: '3600',
+                    upsert: true
+                });
 
-        clearInterval(progressInterval);
-        
-        if (uploadError) throw uploadError;
+            clearInterval(progressInterval);
+            
+            if (uploadError) {
+                console.error('Помилка завантаження:', uploadError);
+                throw uploadError;
+            }
 
-        // Оновлюємо URL фото в профілі
-        const { error: updateError } = await supabase
-            .from('profiles')
-            .update({
-                avatar_url: filePath
-            })
-            .eq('id', session.user.id);
+            // Отримуємо публічне URL завантаженого файлу
+            const { data: { publicUrl } } = supabase.storage
+                .from('avatars')
+                .getPublicUrl(fileName);
 
-        if (updateError) throw updateError;
+            // Оновлюємо URL фото в профілі
+            const { error: updateError } = await supabase
+                .from('profiles')
+                .update({
+                    avatar_url: fileName
+                })
+                .eq('id', session.user.id);
 
-        // Показуємо 100% прогрес
-        progressBar.style.width = '100%';
-        
-        // Оновлюємо превью фото
-        const preview = document.getElementById('currentPhoto');
-        if (preview) {
-            preview.src = URL.createObjectURL(compressedFile);
+            if (updateError) {
+                console.error('Помилка оновлення профілю:', updateError);
+                throw updateError;
+            }
+
+            // Показуємо 100% прогрес
+            progressBar.style.width = '100%';
+            
+            // Оновлюємо аватарку на сторінці
+            const avatar = document.getElementById('currentAvatar');
+            if (avatar) {
+                avatar.src = publicUrl;
+            }
+
+            return { fileName, publicUrl };
+        } catch (error) {
+            console.error('Помилка завантаження фото:', error);
+            throw error;
+        } finally {
+            clearInterval(progressInterval);
         }
 
         // Ховаємо прогрес бар після успішного завантаження
@@ -245,7 +267,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (avatar) {
                 if (profile.avatar_url) {
                     const { data: { publicUrl } } = supabase.storage
-                        .from('profiles')
+                        .from('avatars')
                         .getPublicUrl(profile.avatar_url);
                     avatar.src = publicUrl;
                 } else {

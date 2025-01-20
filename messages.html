@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Повідомлення - SparkME</title>
+    <title>Повідомлення - SparkMe</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="messages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 </head>
 <body>
     <header>
@@ -37,6 +36,8 @@
             <div class="requests-grid" id="requestsContainer">
                 <!-- Запити будуть додані через JavaScript -->
             </div>
+            
+            
         </div>
     </main>
 
@@ -44,19 +45,15 @@
         <p>&copy; 2024 SparkME. Всі права захищені.</p>
     </footer>
 
-    <script>
-        // Ініціалізація Supabase
-        const supabaseUrl = 'https://hqqqneqjqvjaemjusxub.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhxcXFuZXFqcXZqYWVtanVzeHViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczMTMzNjQsImV4cCI6MjA1Mjg4OTM2NH0.1uV4_zyh1AouKmEMSqgvUDpQG4RoF_ppSZDel79wsIk';
-        
-        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-    </script>
-
+    <!-- Спочатку підключаємо Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- Потім наші скрипти -->
     <script src="burger-menu.js" defer></script>
     <script src="config.js" type="module"></script>
     <script src="auth.js" type="module"></script>
     <script src="auth-check.js" type="module"></script>
-    <script src="messages.js" type="module"></script>
+    <script type="module" src="messages.js"></script>
     <script>
         const authButtons = document.getElementById('authButtons');
         const currentUser = localStorage.getItem('currentUser');
