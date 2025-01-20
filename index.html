@@ -40,7 +40,17 @@
         <section class="profiles" id="profilesContainer">
             <!-- Профілі будуть додаватися через JavaScript -->
         </section>
+        <div id="profilesLoader">
+            <div class="loader"></div>
+        </div>
     </main>
+
+    <div id="profileModal" class="profile-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeProfileModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
 
     <div class="welcome-modal" id="welcomeModal">
         <div class="welcome-content">

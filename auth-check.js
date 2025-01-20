@@ -31,13 +31,11 @@ async function checkAuth() {
             
             authButtons.innerHTML = `
                 <a href="profile.html" class="user-name">${displayName}</a>
-                <button onclick="window.logout()" class="btn">Вийти</button>
+                <button onclick="window.logout()" class="btn" title="Вийти"><i class="fas fa-sign-out-alt"></i></button>
             `;
         } else {
-            authButtons.innerHTML = `
-                <a href="login.html" class="btn">Увійти</a>
-                <a href="register.html" class="btn">Реєстрація</a>
-            `;
+            // Приховуємо кнопки авторизації
+            authButtons.style.display = 'none';
         }
     } catch (error) {
         console.error('Помилка перевірки автентифікації:', error);
